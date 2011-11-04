@@ -27,6 +27,15 @@ import denver.svgeditor.Main;
 import denver.svgeditor.strings.SVGEditorResource;
 
 import net.rim.device.api.ui.MenuItem;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.pane.HorizontalTabController;
+import net.rim.device.api.ui.component.pane.HorizontalTabTitleView;
+import net.rim.device.api.ui.component.pane.Pane;
+import net.rim.device.api.ui.component.pane.PaneManagerController;
+import net.rim.device.api.ui.component.pane.PaneManagerModel;
+import net.rim.device.api.ui.component.pane.PaneManagerView;
+import net.rim.device.api.ui.component.pane.PaneView;
+import net.rim.device.api.ui.component.pane.TitleView;
 import net.rim.device.api.ui.container.MainScreen;
 
 /**
@@ -41,6 +50,31 @@ public class SVGEditorScreen extends MainScreen {
      * Creates a new instance of <code>SVGEditorScreen</code>.
      */
     public SVGEditorScreen() {
+        super(NO_VERTICAL_SCROLL);
+
+        // setup the pane
+        final PaneManagerModel paneManagerModel = new PaneManagerModel();
+        paneManagerModel.addPane(new Pane(new LabelField("Title 0"),
+            new LabelField("Content 0")));
+        paneManagerModel.addPane(new Pane(new LabelField("Title 1"),
+            new LabelField("Content 1")));
+        paneManagerModel.addPane(new Pane(new LabelField("Title 2"),
+            new LabelField("Content 2")));
+
+        final TitleView titleView = new HorizontalTabTitleView(0);
+        titleView.setModel(paneManagerModel);
+        final PaneView paneView = new PaneView(0);
+        paneView.setModel(paneManagerModel);
+        final PaneManagerView paneManagerView =
+            new PaneManagerView(0, titleView, paneView);
+        paneManagerView.setModel(paneManagerModel);
+        final PaneManagerController paneManagerController =
+            new HorizontalTabController();
+        paneManagerView.setController(paneManagerController);
+        paneManagerView.setModel(paneManagerModel);
+        this.add(paneManagerView);
+
+        // add the menu items
         this.addMenuItem(new NewMenuItem(0, 0));
         this.addMenuItem(new OpenMenuItem(0, 1));
     }
