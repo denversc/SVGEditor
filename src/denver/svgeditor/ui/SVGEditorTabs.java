@@ -63,7 +63,8 @@ public class SVGEditorTabs {
         final PaneView paneView = new PaneView(Field.FOCUSABLE);
         paneView.setModel(model);
 
-        final PaneManagerView view = new PaneManagerView(Field.FOCUSABLE, titleView, paneView);
+        final PaneManagerView view =
+            new PaneManagerView(Field.FOCUSABLE, titleView, paneView);
         view.setModel(model);
         model.setView(view);
 
@@ -71,12 +72,13 @@ public class SVGEditorTabs {
         controller.setView(view);
         model.setController(controller);
         view.setController(controller);
-        
+
         this.view = view;
     }
-    
+
     /**
      * Returns the field that displays the tabs.
+     * 
      * @return the field that displays the tabs; never returns null
      */
     public Field getField() {

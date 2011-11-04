@@ -29,7 +29,9 @@ import denver.svgeditor.ui.SVGEditorScreen;
 
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.ApplicationDescriptor;
+import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.util.StringProvider;
 
 public class Main extends UiApplication implements Runnable {
 
@@ -117,6 +119,19 @@ public class Main extends UiApplication implements Runnable {
     }
 
     /**
+     * Creates and returns a StringProvider for a string from this application's
+     * resource bundle.
+     * 
+     * @param id the ID of the string to return
+     * @return a newly-created StringProvider created from this application's
+     * resource bundle (the one returned from {@link #getResourceBundle()})
+     * whose value is the string with the given ID; never returns null
+     */
+    public static StringProvider getString(int id) {
+        return new StringProvider(SVGEditorResource.BUNDLE_NAME, id);
+    }
+
+    /**
      * Gets the title of this application. This method retrieves the title from
      * the {@link ApplicationDescriptor} of the main entry point of this
      * application.
@@ -150,6 +165,29 @@ public class Main extends UiApplication implements Runnable {
         final String version =
             (descriptor == null) ? null : descriptor.getVersion();
         return version;
+    }
+
+    /**
+     * Loads an image resource.
+     * 
+     * @param path the path of the resource to load
+     * @return the EncodedImage that was loaded; returns null if no image with
+     * the given path is found or if the file is not a valid image
+     * @throws NullPointerException if path==null
+     */
+    public static EncodedImage loadImageResource(String path) {
+        if (path == null) {
+            throw new NullPointerException("path==null");
+        }
+
+        EncodedImage image;
+        try {
+            image = EncodedImage.getEncodedImageResource(path);
+        } catch (final IllegalArgumentException e) {
+            return null; // image is malformed or does not exist
+        }
+
+        return image;
     }
 
     /**

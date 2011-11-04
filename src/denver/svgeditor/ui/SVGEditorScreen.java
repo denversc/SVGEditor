@@ -35,10 +35,10 @@ import net.rim.device.api.ui.container.MainScreen;
 public class SVGEditorScreen extends MainScreen {
 
     private final SVGEditorTabs tabs;
-    
+
     private Action newAction;
     private Action openAction;
-    
+
     /**
      * Creates a new instance of <code>SVGEditorScreen</code>.
      */
@@ -47,7 +47,7 @@ public class SVGEditorScreen extends MainScreen {
 
         // setup the pane
         this.tabs = new SVGEditorTabs();
-        this.add(this.tabs.getField());
+        this.add(new WelcomeField());
 
         // add the menu items
         this.addMenuItem(new NewMenuItem(0, 0));
