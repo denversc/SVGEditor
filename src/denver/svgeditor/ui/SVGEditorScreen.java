@@ -26,6 +26,7 @@ package denver.svgeditor.ui;
 import denver.svgeditor.Main;
 import denver.svgeditor.strings.SVGEditorResource;
 
+import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.pane.HorizontalTabController;
@@ -54,24 +55,34 @@ public class SVGEditorScreen extends MainScreen {
 
         // setup the pane
         final PaneManagerModel paneManagerModel = new PaneManagerModel();
-        paneManagerModel.addPane(new Pane(new LabelField("Title 0"),
-            new LabelField("Content 0")));
-        paneManagerModel.addPane(new Pane(new LabelField("Title 1"),
-            new LabelField("Content 1")));
-        paneManagerModel.addPane(new Pane(new LabelField("Title 2"),
-            new LabelField("Content 2")));
+        paneManagerModel.enableLooping(true);
+        paneManagerModel.addPane(new Pane(new LabelField("Title 0",
+            Field.FOCUSABLE), new LabelField("Content 0", Field.FOCUSABLE)));
+        paneManagerModel.addPane(new Pane(new LabelField("Title 1",
+            Field.FOCUSABLE), new LabelField("Content 1", Field.FOCUSABLE)));
+        paneManagerModel.addPane(new Pane(new LabelField("Title 2",
+            Field.FOCUSABLE), new LabelField("Content 2", Field.FOCUSABLE)));
+        paneManagerModel.setCurrentlySelectedIndex(0);
 
-        final TitleView titleView = new HorizontalTabTitleView(0);
+        final TitleView titleView = new HorizontalTabTitleView(Field.FOCUSABLE);
         titleView.setModel(paneManagerModel);
-        final PaneView paneView = new PaneView(0);
-        paneView.setModel(paneManagerModel);
-        final PaneManagerView paneManagerView =
-            new PaneManagerView(0, titleView, paneView);
-        paneManagerView.setModel(paneManagerModel);
+
         final PaneManagerController paneManagerController =
             new HorizontalTabController();
-        paneManagerView.setController(paneManagerController);
+
+        final PaneView paneView = new PaneView(Field.FOCUSABLE);
+        paneView.setModel(paneManagerModel);
+
+        final PaneManagerView paneManagerView =
+            new PaneManagerView(Field.FOCUSABLE, titleView, paneView);
         paneManagerView.setModel(paneManagerModel);
+        paneManagerModel.setView(paneManagerView);
+
+        paneManagerController.setModel(paneManagerModel);
+        paneManagerController.setView(paneManagerView);
+        paneManagerModel.setController(paneManagerController);
+        paneManagerView.setController(paneManagerController);
+
         this.add(paneManagerView);
 
         // add the menu items
