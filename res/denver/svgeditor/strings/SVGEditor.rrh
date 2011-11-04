@@ -1,0 +1,4 @@
+package denver.svgeditor.strings;
+
+APP_TITLE#0=0;
+APP_DESCRIPTION#0=1;
