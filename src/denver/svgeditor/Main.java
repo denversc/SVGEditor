@@ -23,13 +23,17 @@
  */
 package denver.svgeditor;
 
+import denver.svgeditor.strings.SVGEditorResource;
 import denver.svgeditor.ui.PushScreenRunnable;
 import denver.svgeditor.ui.SVGEditorScreen;
 
+import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.ui.UiApplication;
 
 public class Main extends UiApplication implements Runnable {
+
+    private static ResourceBundle resourceBundle;
 
     private final String[] args;
 
@@ -63,11 +67,11 @@ public class Main extends UiApplication implements Runnable {
         while (!this.hasEventThread()) {
             Thread.yield();
         }
-        
+
         // process the args (at this point this is just to suppress warnings)
-        String[] args = getArgs();
+        final String[] args = this.getArgs();
         if (args != null && args.length > 0) {
-            String arg = args[0];
+            final String arg = args[0];
             if (arg != null) {
                 arg.toString();
             }
@@ -92,6 +96,24 @@ public class Main extends UiApplication implements Runnable {
         final SVGEditorScreen screen = new SVGEditorScreen();
         screen.setTitle(screenTitle);
         this.invokeAndWait(new PushScreenRunnable(screen, this));
+    }
+
+    /**
+     * Returns the resource bundle for this application. The first invocation of
+     * this method within an application does the work to parse and load the
+     * bundle; all subsequent invocations will receive the exact same object
+     * which was cached from the first invocation.
+     * 
+     * @return the resource bundle for this application; never returns null
+     */
+    public static ResourceBundle getResourceBundle() {
+        ResourceBundle resourceBundle = Main.resourceBundle;
+        if (resourceBundle == null) {
+            final long bundleId = SVGEditorResource.BUNDLE_ID;
+            final String bundleName = SVGEditorResource.BUNDLE_NAME;
+            resourceBundle = ResourceBundle.getBundle(bundleId, bundleName);
+        }
+        return resourceBundle;
     }
 
     /**

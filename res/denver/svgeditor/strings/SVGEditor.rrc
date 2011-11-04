@@ -1,2 +1,4 @@
 APP_DESCRIPTION#0="Edit and view SVG images";
 APP_TITLE#0="SVG Editor";
+MENU_NEW#0="New";
+MENU_OPEN#0="Open";

@@ -2,3 +2,5 @@ package denver.svgeditor.strings;
 
 APP_TITLE#0=0;
 APP_DESCRIPTION#0=1;
+MENU_NEW#0=2;
+MENU_OPEN#0=3;
