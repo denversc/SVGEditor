@@ -26,17 +26,7 @@ package denver.svgeditor.ui;
 import denver.svgeditor.Main;
 import denver.svgeditor.strings.SVGEditorResource;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
-import net.rim.device.api.ui.component.LabelField;
-import net.rim.device.api.ui.component.pane.HorizontalTabController;
-import net.rim.device.api.ui.component.pane.HorizontalTabTitleView;
-import net.rim.device.api.ui.component.pane.Pane;
-import net.rim.device.api.ui.component.pane.PaneManagerController;
-import net.rim.device.api.ui.component.pane.PaneManagerModel;
-import net.rim.device.api.ui.component.pane.PaneManagerView;
-import net.rim.device.api.ui.component.pane.PaneView;
-import net.rim.device.api.ui.component.pane.TitleView;
 import net.rim.device.api.ui.container.MainScreen;
 
 /**
@@ -44,9 +34,11 @@ import net.rim.device.api.ui.container.MainScreen;
  */
 public class SVGEditorScreen extends MainScreen {
 
+    private final SVGEditorTabs tabs;
+    
     private Action newAction;
     private Action openAction;
-
+    
     /**
      * Creates a new instance of <code>SVGEditorScreen</code>.
      */
@@ -54,36 +46,8 @@ public class SVGEditorScreen extends MainScreen {
         super(NO_VERTICAL_SCROLL);
 
         // setup the pane
-        final PaneManagerModel paneManagerModel = new PaneManagerModel();
-        paneManagerModel.enableLooping(true);
-        paneManagerModel.addPane(new Pane(new LabelField("Title 0",
-            Field.FOCUSABLE), new LabelField("Content 0", Field.FOCUSABLE)));
-        paneManagerModel.addPane(new Pane(new LabelField("Title 1",
-            Field.FOCUSABLE), new LabelField("Content 1", Field.FOCUSABLE)));
-        paneManagerModel.addPane(new Pane(new LabelField("Title 2",
-            Field.FOCUSABLE), new LabelField("Content 2", Field.FOCUSABLE)));
-        paneManagerModel.setCurrentlySelectedIndex(0);
-
-        final TitleView titleView = new HorizontalTabTitleView(Field.FOCUSABLE);
-        titleView.setModel(paneManagerModel);
-
-        final PaneManagerController paneManagerController =
-            new HorizontalTabController();
-
-        final PaneView paneView = new PaneView(Field.FOCUSABLE);
-        paneView.setModel(paneManagerModel);
-
-        final PaneManagerView paneManagerView =
-            new PaneManagerView(Field.FOCUSABLE, titleView, paneView);
-        paneManagerView.setModel(paneManagerModel);
-        paneManagerModel.setView(paneManagerView);
-
-        paneManagerController.setModel(paneManagerModel);
-        paneManagerController.setView(paneManagerView);
-        paneManagerModel.setController(paneManagerController);
-        paneManagerView.setController(paneManagerController);
-
-        this.add(paneManagerView);
+        this.tabs = new SVGEditorTabs();
+        this.add(this.tabs.getField());
 
         // add the menu items
         this.addMenuItem(new NewMenuItem(0, 0));
