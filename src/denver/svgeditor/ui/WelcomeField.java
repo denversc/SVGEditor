@@ -28,10 +28,13 @@ import denver.svgeditor.strings.SVGEditorResource;
 
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.EncodedImage;
+import net.rim.device.api.ui.Color;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.ButtonField;
+import net.rim.device.api.ui.decor.Background;
+import net.rim.device.api.ui.decor.BackgroundFactory;
 import net.rim.device.api.util.StringProvider;
 
 /**
@@ -50,6 +53,11 @@ public class WelcomeField extends Manager {
             this.getIconField("icon_open.png", SVGEditorResource.MENU_OPEN);
         this.add(this.newField);
         this.add(this.openField);
+
+        final Background background =
+            BackgroundFactory.createLinearGradientBackground(Color.DARKVIOLET,
+                Color.DARKVIOLET, Color.DIMGRAY, Color.DIMGRAY);
+        this.setBackground(background);
     }
 
     /**
